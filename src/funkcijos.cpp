@@ -55,10 +55,38 @@ void skaiciuotiZodzius(){
         }
     }
 
-    isvestiRezultata(zodziuSkaicius, zodziuEiles, "rez.txt");
+    //isvestiRezultata(zodziuSkaicius, zodziuEiles, "rez.txt");
+    isvestiZodziuKiekius(zodziuSkaicius, "kiekiai.txt");
+    isvestiZodziuEilutes(zodziuSkaicius, zodziuEiles, "vietos.txt");
 }
 
-void isvestiRezultata(const map<string, int>& zodziuSkaicius, const map<string, set<int>>& zodziuEiles, const string& failoPavadinimas){
+// void isvestiRezultata(const map<string, int>& zodziuSkaicius, const map<string, set<int>>& zodziuEiles, const string& failoPavadinimas){
+//     ofstream failas(failoPavadinimas);
+//     if (!failas) {
+//         cerr << "Nepavyko sukurti failo: " << failoPavadinimas << endl;
+//         return;
+//     }
+
+//     // antraste
+//     failas << left << setw(15) << "Zodis" << setw(10) << "Kiekis" << setw(10) << "Eilutes" << "\n";
+//     failas << string(50, '-') << "\n";
+
+//     for (const auto& [zodis, skaicius] : zodziuSkaicius){
+//         if (skaicius > 1){
+//             failas << left << setw(15) << zodis << setw(10) << skaicius;
+//             //failas << zodis << " (" << skaicius << " kartai): ";
+//             for (int eilute : zodziuEiles.at(zodis)){
+//                 failas << eilute << " ";
+//             }
+//             failas << "\n";
+//         }
+//     }
+
+//     failas.close();
+//     cout << "Rezultatai sėkmingai išsaugoti faile: " << failoPavadinimas << endl;
+// }
+
+void isvestiZodziuKiekius(const map<string, int>& zodziuSkaicius, const string& failoPavadinimas){
     ofstream failas(failoPavadinimas);
     if (!failas) {
         cerr << "Nepavyko sukurti failo: " << failoPavadinimas << endl;
@@ -66,13 +94,34 @@ void isvestiRezultata(const map<string, int>& zodziuSkaicius, const map<string, 
     }
 
     // antraste
-    failas << left << setw(15) << "Zodis" << setw(10) << "Kiekis" << setw(10) << "Eilutes" << "\n";
+    failas << left << setw(15) << "Žodis" << setw(10) << "Kiekis" << "\n";
+    failas << string(30, '-') << "\n";
+
+    for (const auto& [zodis, skaicius] : zodziuSkaicius){
+        if (skaicius > 1){
+            failas << left << setw(15) << zodis << setw(10) << skaicius << "\n";
+        }
+    }
+
+    failas.close();
+    cout << "Žodžių kiekiai sėkmingai išsaugoti faile: " << failoPavadinimas << endl;
+
+}
+
+void isvestiZodziuEilutes(const map<string, int>& zodziuSkaicius, const map<string, set<int>>& zodziuEiles, const string& failoPavadinimas){
+    ofstream failas(failoPavadinimas);
+    if (!failas) {
+        cerr << "Nepavyko sukurti failo: " << failoPavadinimas << endl;
+        return;
+    }
+
+    // antraste
+    failas << left << setw(15) << "Žodis" << setw(10) << "Vieta (eilutės nr)" << "\n";
     failas << string(50, '-') << "\n";
 
     for (const auto& [zodis, skaicius] : zodziuSkaicius){
         if (skaicius > 1){
-            failas << left << setw(15) << zodis << setw(10) << skaicius;
-            //failas << zodis << " (" << skaicius << " kartai): ";
+            failas << left << setw(15) << zodis;
             for (int eilute : zodziuEiles.at(zodis)){
                 failas << eilute << " ";
             }
@@ -81,7 +130,8 @@ void isvestiRezultata(const map<string, int>& zodziuSkaicius, const map<string, 
     }
 
     failas.close();
-    cout << "Rezultatai sėkmingai išsaugoti faile: " << failoPavadinimas << endl;
+    cout << "Žodžių vietos sėkmingai išsaugoti faile: " << failoPavadinimas << endl;
+
 }
 
 void rastiURL(const string& ivestiesFailoPavadinimas, const string& isvestiesFailoPavadinimas){
