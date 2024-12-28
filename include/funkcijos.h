@@ -2,8 +2,9 @@
 #define FUNKCIJOS_H_INCLUDED
 
 #include "Lib.h"
-#include "../src/funkcijos.cpp"
+//#include "../src/funkcijos.cpp"
 
 string tvarkytiTeksta(const string& zodis);
+void skaiciuotiZodzius();
 
 #endif
