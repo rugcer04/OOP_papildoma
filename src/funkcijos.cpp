@@ -1,6 +1,10 @@
 #include "../include/Lib.h"
 #include "../include/funkcijos.h"
 
+#include <regex>
+using std::regex;
+using std::sregex_iterator;
+
 string tvarkytiTeksta(const string& zodis){
     string sutvarkytas;
     for(char raide : zodis){
@@ -80,3 +84,17 @@ void isvestiRezultata(const map<string, int>& zodziuSkaicius, const map<string, 
     cout << "Rezultatai sėkmingai išsaugoti faile: " << failoPavadinimas << endl;
 }
 
+void rastiURL(const string& ivestiesFailoPavadinimas, const string& isvestiesFailoPavadinimas){
+    ifstream ivestis(ivestiesFailoPavadinimas);
+    ofstream isvestis(isvestiesFailoPavadinimas);
+
+    string eilute;
+    regex urlRegex(R"((https?://[^\s,]+|www\.[^\s,]+|\b[a-z0-9.-]+\.[a-z]{2,}\b))");
+
+    while (getline(ivestis, eilute)){
+        sregex_iterator begin(eilute.begin(), eilute.end(), urlRegex), end;
+        for (auto it = begin; it != end; ++it){
+            isvestis << it->str() << "\n";
+        }
+    }  
+}
