@@ -1,19 +1,6 @@
 #include "../include/Lib.h"
 #include "../include/funkcijos.h"
 
-#include <map>
-#include <set>
-#include <fstream>
-#include <sstream>
-//#include <cctype>
-
-using std::map;
-using std::set;
-using std::ifstream;
-using std::istringstream;
-using std::cerr;
-using std::runtime_error;
-
 string tvarkytiTeksta(const string& zodis){
     string sutvarkytas;
     for(char raide : zodis){
@@ -61,6 +48,21 @@ void skaiciuotiZodzius(){
                 zodziuSkaicius[sutvarkytas]++;
                 zodziuEiles[sutvarkytas].insert(eilutesNumeris);
             }
+        }
+    }
+
+    isvestiRezultata(zodziuSkaicius, zodziuEiles, "rez.txt");
+}
+
+void isvestiRezultata(const map<string, int>& zodziuSkaicius, const map<string, set<int>>& zodziuEiles, const string& failoPavadinimas){
+    ofstream failas(failoPavadinimas);
+    for (const auto& [zodis, skaicius] : zodziuSkaicius){
+        if (skaicius > 1){
+            failas << zodis << " (" << skaicius << " kartai): ";
+            for (int eilute : zodziuEiles.at(zodis)){
+                failas << eilute << " ";
+            }
+            failas << "\n";
         }
     }
 }

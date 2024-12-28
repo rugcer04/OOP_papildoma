@@ -6,5 +6,6 @@
 
 string tvarkytiTeksta(const string& zodis);
 void skaiciuotiZodzius();
+void isvestiRezultata(const map<string, int>& zodziuSkaicius, const map<string, set<int>>& zodziuEiles, const string& failoPavadinimas);
 
 #endif
