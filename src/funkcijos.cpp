@@ -56,13 +56,27 @@ void skaiciuotiZodzius(){
 
 void isvestiRezultata(const map<string, int>& zodziuSkaicius, const map<string, set<int>>& zodziuEiles, const string& failoPavadinimas){
     ofstream failas(failoPavadinimas);
+    if (!failas) {
+        cerr << "Nepavyko sukurti failo: " << failoPavadinimas << endl;
+        return;
+    }
+
+    // antraste
+    failas << left << setw(15) << "Zodis" << setw(10) << "Kiekis" << setw(10) << "Eilutes" << "\n";
+    failas << string(50, '-') << "\n";
+
     for (const auto& [zodis, skaicius] : zodziuSkaicius){
         if (skaicius > 1){
-            failas << zodis << " (" << skaicius << " kartai): ";
+            failas << left << setw(15) << zodis << setw(10) << skaicius;
+            //failas << zodis << " (" << skaicius << " kartai): ";
             for (int eilute : zodziuEiles.at(zodis)){
                 failas << eilute << " ";
             }
             failas << "\n";
         }
     }
+
+    failas.close();
+    cout << "Rezultatai sėkmingai išsaugoti faile: " << failoPavadinimas << endl;
 }
+

@@ -6,6 +6,7 @@
 #include <set>
 #include <fstream>
 #include <sstream>
+#include <iomanip>
 
 using std::string;
 using std::cout;
@@ -18,5 +19,8 @@ using std::istringstream;
 using std::cerr;
 using std::runtime_error;
 using std::ofstream;
+using std::left;
+using std::setw;
+using std::right;
 
 #endif
