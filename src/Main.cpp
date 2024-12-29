@@ -6,7 +6,7 @@ int main(){
 
     string input = "test.txt";
     string output = "url.txt";
-    rastiURL(input, output);
+    rastiURL(input);
 
     return 0;
 }

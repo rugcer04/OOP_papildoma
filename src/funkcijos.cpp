@@ -1,10 +1,6 @@
 #include "../include/Lib.h"
 #include "../include/funkcijos.h"
 
-#include <regex>
-using std::regex;
-using std::sregex_iterator;
-
 string tvarkytiTeksta(const string& zodis){
     string sutvarkytas;
     for(char raide : zodis){
@@ -130,21 +126,75 @@ void isvestiZodziuEilutes(const map<string, int>& zodziuSkaicius, const map<stri
     }
 
     failas.close();
-    cout << "Žodžių vietos sėkmingai išsaugoti faile: " << failoPavadinimas << endl;
+    cout << "Žodžių vietos sėkmingai išsaugotos faile: " << failoPavadinimas << endl;
 
 }
 
-void rastiURL(const string& ivestiesFailoPavadinimas, const string& isvestiesFailoPavadinimas){
+// void rastiURL(const string& ivestiesFailoPavadinimas, const string& isvestiesFailoPavadinimas){
+//     ifstream ivestis(ivestiesFailoPavadinimas);
+//     ofstream isvestis(isvestiesFailoPavadinimas);
+
+
+//     string eilute;
+//     regex urlRegex(R"((https?://[^\s,]+|www\.[^\s,]+|\b[a-z0-9.-]+\.[a-z]{2,}\b))");
+
+//     while (getline(ivestis, eilute)){
+//         sregex_iterator begin(eilute.begin(), eilute.end(), urlRegex), end;
+//         for (auto it = begin; it != end; ++it){
+//             isvestis << it->str() << "\n";
+//         }
+//     }  
+// }
+
+void rastiURL(const string& ivestiesFailoPavadinimas){
     ifstream ivestis(ivestiesFailoPavadinimas);
-    ofstream isvestis(isvestiesFailoPavadinimas);
+
+    if (!ivestis){
+        cerr << "Nepavyko atidaryti failo: " << ivestiesFailoPavadinimas << endl;
+        return;
+    }
+
+    char pasirinkimas;
+    while (true){
+        cout << "Ar norite rezultatus spausdinti į failą (F) ar į terminalą (T)?: ";
+        cin >> pasirinkimas;
+        pasirinkimas = toupper(pasirinkimas);
+
+        if (pasirinkimas == 'F' || pasirinkimas == 'T'){
+            break;
+        } else {
+            cout << "Neteisinga įvestis, bandykite dar kartą.\n";
+        }
+    }
 
     string eilute;
     regex urlRegex(R"((https?://[^\s,]+|www\.[^\s,]+|\b[a-z0-9.-]+\.[a-z]{2,}\b))");
 
-    while (getline(ivestis, eilute)){
-        sregex_iterator begin(eilute.begin(), eilute.end(), urlRegex), end;
-        for (auto it = begin; it != end; ++it){
-            isvestis << it->str() << "\n";
+    if (pasirinkimas == 'F'){
+        string isvestiesFailoPavadinimas = "url.txt";
+        ofstream isvestis(isvestiesFailoPavadinimas);
+
+        if (!isvestis) {
+            cerr << "Nepavyko sukurti failo: " << isvestiesFailoPavadinimas << endl;
+            return;
         }
-    }  
+
+        while (getline(ivestis, eilute)){
+            sregex_iterator begin(eilute.begin(), eilute.end(), urlRegex), end;
+            for (auto it = begin; it != end; ++it){
+                isvestis << it->str() << "\n";
+            }
+        }
+
+        cout << "Rezultatai sėkmingai išsaugoti faile: " << isvestiesFailoPavadinimas << endl;
+
+    } else if (pasirinkimas == 'T'){
+        while (getline(ivestis, eilute)){
+            sregex_iterator begin(eilute.begin(), eilute.end(), urlRegex), end;
+            for (auto it = begin; it != end; ++it){
+                cout << it->str() << "\n";
+            }
+        }
+
+    }
 }

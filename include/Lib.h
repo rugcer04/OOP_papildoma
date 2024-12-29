@@ -7,6 +7,7 @@
 #include <fstream>
 #include <sstream>
 #include <iomanip>
+#include <regex>
 
 using std::string;
 using std::cout;
@@ -22,5 +23,7 @@ using std::ofstream;
 using std::left;
 using std::setw;
 using std::right;
+using std::regex;
+using std::sregex_iterator;
 
 #endif
