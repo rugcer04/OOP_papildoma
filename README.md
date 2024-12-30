@@ -10,11 +10,11 @@ Programa randa žodžius tekste, kurie pasikartoja daugiau nei 1 kartą, apskai�
 - Priklausomai nuo jūsų pasirinkimo, rezultatus matysite ekrane arba "url.txt" faile.
 
 ## Rezultatų pavyzdžiai
-"kiekiai.txt" - žodžiai ir jų pasikartojimo skaičius (kurie pasikartoja daugiau nei 1 kartą)
+"kiekiai.txt" - žodžiai ir jų pasikartojimo skaičius (kurie pasikartoja daugiau nei 1 kartą)                   
 ![kiekiai](kiekiai.png)
 
-"vietos.txt" - žodžiai ir jų vieta teksto eilutėse
+"vietos.txt" - žodžiai ir jų vieta teksto eilutėse                          
 ![vietos](vietos.png)
 
-"url.txt" - url adresai
+"url.txt" - url adresai                            
 ![url](url.png)
