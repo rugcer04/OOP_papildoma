@@ -51,7 +51,6 @@ void skaiciuotiZodzius(){
         }
     }
 
-    //isvestiRezultata(zodziuSkaicius, zodziuEiles, "rez.txt");
     isvestiZodziuKiekius(zodziuSkaicius, "kiekiai.txt");
     isvestiZodziuEilutes(zodziuSkaicius, zodziuEiles, "vietos.txt");
     rastiURL(failoPavadinimas);
@@ -87,8 +86,8 @@ void isvestiZodziuEilutes(const map<string, int>& zodziuSkaicius, const map<stri
     }
 
     // antraste
-    failas << left << setw(15) << "Žodis" << setw(10) << "Vieta (eilutės nr)" << "\n";
-    failas << string(50, '-') << "\n";
+    failas << left << setw(15) << "Žodis" << setw(18) << "Vieta (eilutės nr)" << "\n";
+    failas << string(60, '-') << "\n";
 
     for (const auto& [zodis, skaicius] : zodziuSkaicius){
         if (skaicius > 1){
@@ -125,7 +124,7 @@ void rastiURL(const string& ivestiesFailoPavadinimas){
     // ((https?://[^\s,]+|www\.[^\s,]+|\b[a-z0-9.-]+\.(com|net|org|edu|xyz|[a-z]{2})\b))
     string eilute;
     set<string> urls;
-    regex urlRegex(R"((https?://[^\s,]+|www\.[^\s,]+|\b[a-z0-9.-]+\.(com|net|org|edu|xyz|int|gov|mil|info|biz|aero|asia|cat|coop|jobs|name|pro|tel|travel|mobi|post|[a-z]{2})(/[^\s]*)?)\b)");
+    regex urlRegex(R"((https?://[^\s,]+|www\.[^\s,]+|\b[a-z0-9.-]+\.(com|net|org|edu|xyz|int|gov|mil|info|biz|aero|asia|cat|coop|jobs|name|pro|tel|mobi|post|firm|gen|health|lat|tech|bank|bio|email|legal|news|ngo|rent|[a-z]{2})(/[^\s]*)?)\b)");
 
     ofstream isvestis;
     if (pasirinkimas == 'F'){
