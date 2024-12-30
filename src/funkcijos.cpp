@@ -108,11 +108,6 @@ void isvestiZodziuEilutes(const map<string, int>& zodziuSkaicius, const map<stri
 void rastiURL(const string& ivestiesFailoPavadinimas){
     ifstream ivestis(ivestiesFailoPavadinimas);
 
-    if (!ivestis){
-        cerr << "Nepavyko atidaryti failo: " << ivestiesFailoPavadinimas << endl;
-        return;
-    }
-
     char pasirinkimas;
     while (true){
         cout << "Ar norite rezultatus spausdinti į failą (F) ar į terminalą (T)?: ";
@@ -126,15 +121,16 @@ void rastiURL(const string& ivestiesFailoPavadinimas){
         }
     }
 
+    // ((https?://[^\s,]+|www\.[^\s,]+|\b[a-z0-9.-]+\.[a-z]{2,}\b))
+    // ((https?://[^\s,]+|www\.[^\s,]+|\b[a-z0-9.-]+\.(com|net|org|edu|xyz|[a-z]{2})\b))
     string eilute;
-    regex urlRegex(R"((https?://[^\s,]+|www\.[^\s,]+|\b[a-z0-9.-]+\.[a-z]{2,}\b))");
-    bool rasta = false;
+    set<string> urls;
+    regex urlRegex(R"((https?://[^\s,]+|www\.[^\s,]+|\b[a-z0-9.-]+\.(com|net|org|edu|xyz|int|gov|mil|info|biz|aero|asia|cat|coop|jobs|name|pro|tel|travel|mobi|post|[a-z]{2})(/[^\s]*)?)\b)");
 
     ofstream isvestis;
     if (pasirinkimas == 'F'){
         string isvestiesFailoPavadinimas = "url.txt";
         isvestis.open(isvestiesFailoPavadinimas);
-        //ofstream isvestis(isvestiesFailoPavadinimas);
 
         if (!isvestis) {
             cerr << "Nepavyko sukurti failo: " << isvestiesFailoPavadinimas << endl;
@@ -145,41 +141,28 @@ void rastiURL(const string& ivestiesFailoPavadinimas){
     while (getline(ivestis, eilute)){
         sregex_iterator begin(eilute.begin(), eilute.end(), urlRegex), end;
         for (auto it = begin; it != end; ++it){
-            rasta = true;
-            if (pasirinkimas == 'F'){
-                isvestis << it->str() << "\n";
-            } else {
-                cout << it -> str() << "\n";
+            string url = it -> str();
+
+            while (!url.empty() && (url.back() == ',' || url.back() == '.' || url.back() == '?' || url.back() == '!')) {
+                url.pop_back();
             }
+
+            urls.insert(url);
         }
     }
 
-    if (rasta) {
+    if (!urls.empty()) {
+        for (const auto& url : urls) {
+            if (pasirinkimas == 'F') {
+                isvestis << url << "\n";
+            } else {
+                cout << url << "\n";
+            }
+        }
         if (pasirinkimas == 'F') {
             cout << "Rezultatai sėkmingai išsaugoti faile: url.txt" << endl;
         }
     } else {
         cout << "Url nerasta!" << endl;
     }
-
-
-
-    //     while (getline(ivestis, eilute)){
-    //         sregex_iterator begin(eilute.begin(), eilute.end(), urlRegex), end;
-    //         for (auto it = begin; it != end; ++it){
-    //             isvestis << it->str() << "\n";
-    //         }
-    //     }
-
-    //     cout << "Rezultatai sėkmingai išsaugoti faile: " << isvestiesFailoPavadinimas << endl;
-
-    // } else if (pasirinkimas == 'T'){
-    //     while (getline(ivestis, eilute)){
-    //         sregex_iterator begin(eilute.begin(), eilute.end(), urlRegex), end;
-    //         for (auto it = begin; it != end; ++it){
-    //             cout << it->str() << "\n";
-    //         }
-    //     }
-
-    // }
 }
